@@ -1,5 +1,5 @@
 [![.NET](https://github.com/mekkl/mekkl.io/actions/workflows/wf-dotnet-build.yml/badge.svg)](https://github.com/mekkl/mekkl.io/actions/workflows/wf-dotnet-build.yml)
-[![codecov](https://codecov.io/gh/pitwallsim/pitwallsim-server/branch/main/graph/badge.svg?token=s2XWnEQoWG)](https://codecov.io/gh/pitwallsim/pitwallsim-server)
+[![codecov](https://codecov.io/gh/mekkl/dotnet-starter-template/branch/main/graph/badge.svg?token=UBNBXIPJ3P)](https://codecov.io/gh/mekkl/dotnet-starter-template)
 
 # Introduction 
 PitWallSim backend project
