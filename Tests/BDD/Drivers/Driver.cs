@@ -1,6 +1,6 @@
 using System;
 
-namespace SpecFlowProject1.Drivers
+namespace Tests.BDD.Drivers
 {
     public class Driver
     {
