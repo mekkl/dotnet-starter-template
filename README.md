@@ -2,7 +2,37 @@
 [![codecov](https://codecov.io/gh/mekkl/dotnet-starter-template/branch/main/graph/badge.svg?token=UBNBXIPJ3P)](https://codecov.io/gh/mekkl/dotnet-starter-template)
 
 # Introduction 
-PitWallSim backend project
+Starter dotnet project template with:
+- ...
+- ...
+
+# Table of Content
+
+- [Getting Started](#getting-started)
+  * [Setting up database for development](#setting-up-database-for-development)
+  * [Startup (without Docker)](#startup--without-docker-)
+  * [Startup (with Docker)](#startup--with-docker-)
+  * [Build and Test](#build-and-test)
+- [Entity Framework](#entity-framework)
+  * [Add migration](#add-migration)
+  * [Apply migration](#apply-migration)
+  * [Apply specific migration (rollback to previous)](#apply-specific-migration--rollback-to-previous-)
+  * [Remove migration (latest migration)](#remove-migration--latest-migration-)
+  * [List migrations](#list-migrations)
+- [Nuget versions update](#nuget-versions-update)
+- [Other Resources](#other-resources)
+  * [Benchmark testing](#benchmark-testing)
+  * [Load testing](#load-testing)
+  * [Versioning](#versioning)
+  * [API Versioning](#api-versioning)
+  * [JSON Serialize](#json-serialize)
+  * [SignalR](#signalr)
+  * [Test resources](#test-resources)
+  * [Enforce HTTPS](#enforce-https)
+  * [E2E (End-to-end) testing](#e2e--end-to-end--testing)
+  * [Fluent Validation Doc](#fluent-validation-doc)
+  * [Codecov (coverage report)](#codecov--coverage-report-)
+
 
 # Getting Started
 
@@ -28,7 +58,7 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=yourStrong(!)Password" -p 1433:143
 ![alt text](.github/readme/docker-desktop-start-container.png)
 
 
-Ensure that this setting is found in the `appsettings.Local.json` file.
+Ensure that this setting is found in the `appsettings.*.json` file(s).
 
 ``` json
 {
@@ -38,7 +68,7 @@ Ensure that this setting is found in the `appsettings.Local.json` file.
 }
 ```
 
-## Start the app
+## Startup (without Docker)
 First download and install the .NET Core SDK [here](https://dotnet.microsoft.com/download).
 
 > You can check to see if you have installed the .Net Core SDK version (currently using the latest 6.0) with this command ```$ dotnet --version```
@@ -47,12 +77,12 @@ To startup the API open up a console, at the project root.
 
 Firstly go to the ```Presentation.WebApi``` folder:
 ```
-$ cd Presentation.WebApi
+cd Presentation.WebApi
 ```
 
 Then start the API application with the following command:
 ```
-$ dotnet run
+dotnet run
 ```
 
 
@@ -70,27 +100,68 @@ info: Microsoft.Hosting.Lifetime[0]
       Content root path: C:\Users\ML\Desktop\portfolio-web\web-api
 ```
 
-The API is documented with swagger. Just open the browser and type in the displayed url from the above output.
+## Startup (with Docker)
+First download and install Docker from [here](https://docs.docker.com/get-docker/).
+
+> A Microsoft guide can also be found [here](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows)
+
+Create the image:
+```
+docker build -t <IMAGE_NAME> -f ./MinimalApi/Dockerfile .
+```
+
+Create the container
+```
+docker create --name <CONTAINER_NAME> -p 8081:80 -p 8082:443 <IMAGE_NAME>
+```
+
+The output of the create command will produce a `CONTAINER ID` like:
+```
+7d69d4022efd7eb5190c0156e6c41f2b5d0fead44c50c3e29d4056bfc6c65bf1
+```
+
+You can list all containers with:
+```
+docker ps -a
+```
+
+Starting a container:
+```
+docker start <CONTAINER_NAME>
+```
+
+Or start from image:
+```
+docker run --name <CONTAINER_NAME> -p 8081:80 -p 8082:443 -d <IMAGE_NAME>
+```
+
+Stopping a container:
+```
+docker stop <CONTAINER_NAME>
+```
+
+## (TODO) Docker with HTTPS
+## (TODO) Docker with compose
 
 ## Build and Test
 Command for building the project (run the command at the project root):
 ```
-$ dotnet build
+dotnet build
 ```
 
 Command for running all tests (run the command at the project root):
 ```
-$ dotnet test
+dotnet test
 ```
 
 Command for running all tests, and generating coverage data. The result is ending op in each test project in the dir ```Tests/TestResults/<GUID>/coverage.cobertura.xml```
 ```
-$ dotnet test --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
+dotnet test --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
 ```
 
 Command for generating coverage report from results:
 ```
-$ reportgenerator "-reports:*/TestResults/**/coverage.info" "-targetdir:Tests/CoverageReports" -reporttypes:html
+reportgenerator "-reports:*/TestResults/**/coverage.info" "-targetdir:Tests/CoverageReports" -reporttypes:html
 ```
 > :warning: Usage of **reportgenerator** see: https://github.com/danielpalme/ReportGenerator
 
@@ -101,20 +172,20 @@ Link: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs
 `Microsoft.EntityFrameworkCore.Design` This package is required for the Entity Framework Core Tools to work. Ensure your startup project is correct
 `Microsoft.EntityFrameworkCore.Tools` nuget enables entity framework commands!
 
-> :warning: When using the Package Manager Console, set fefault Project to `Infrastructure`
+> :warning: When using the Package Manager Console, set default Project to `Infrastructure`
 
 ## Add migration 
 ```
-> add-migration <migration-name> -OutputDir Your\Directory 
+add-migration <migration-name> -OutputDir Your\Directory 
 ```
 
 ``` 
-> dotnet ef migrations add <migration-name> -OutputDir --output-dir Your/Directory
+dotnet ef migrations add <migration-name> -OutputDir --output-dir Your/Directory
 ```
 
 ## Apply migration
 ```
-> update-database
+update-database
 ```
 
 ``` 
@@ -123,11 +194,11 @@ Link: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs
 
 ## Apply specific migration (rollback to previous)
 ```
-> Update-Database <previous-migration-name>
+Update-Database <previous-migration-name>
 ```
 
 ```
-> dotnet ef database update <previous-migration-name>
+dotnet ef database update <previous-migration-name>
 ```
 
 ## Remove migration (latest migration)
@@ -136,51 +207,65 @@ Link: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs
 ```
 
 ```
-> dotnet ef migrations remove
+dotnet ef migrations remove
 ```
 
 ## List migrations
 ```
-> Get-Migration
+Get-Migration
 ```
 
 ```
-> dotnet ef migrations list
+dotnet ef migrations list
 ```
 
 # Nuget versions update
+When having this project in GitHub the `Dependabot` can be used to automatically create pull requests when new releases of dependencies is available. See more [here](https://github.com/dependabot)
+
+A tool for checking dependencies locally can also be used. In these examples is `dotnet-outdated` utilized. See more [here](https://github.com/dotnet-outdated/dotnet-outdated).
+
+First install the tool:
+```
+dotnet tool install --global dotnet-outdated-tool
+```
+
+Or if the tool is already installed, it can be updated with:
+```
+dotnet tool update --global dotnet-outdated-tool
+```
+
 Command for checking nuget version
 ```
-$ dotnet outdated
+dotnet outdated
 ```
 
 Command for checking nuget version and upgrade
 ```
-$ dotnet outdated -u
+dotnet outdated -u
 ```
 
-> :warning: To use **dotnet outdated** the tool must first be installed. See: https://github.com/dotnet-outdated/dotnet-outdated
+# Other Resources
 
-# Benchmark testing
+## Benchmark testing
 See: https://github.com/dotnet/BenchmarkDotNet
 
-# Load testing
+## Load testing
 See: https://www.youtube.com/watch?v=r-Jte8Y8zag
 
-# Versioning
+## Versioning
 See: https://medium.com/fiverr-engineering/major-minor-patch-a5298e2e1798
 
-# API Versioning
+## API Versioning
 See: https://www.youtube.com/watch?v=iVHtKG0eU_s
 See: https://dev.to/htissink/asp-net-core-api-path-versioning-197o
 
-# JSON Serialize
+## JSON Serialize
 See: https://github.com/neuecc/Utf8Json
 
-# SignalR
+## SignalR
 See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetcore-6.0
 
-# Test resources
+## Test resources
 - https://dejanstojanovic.net/aspnet/2020/may/setting-up-code-coverage-reports-in-azure-devops-pipeline/
 - https://medium.com/@tarik.nzl/publishing-test-coverage-with-net-core-and-vsts-build-pipelines-39a2f29dfa12
 - https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage?tabs=windows
@@ -192,16 +277,16 @@ See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetc
 
 - Maybe see for multiple test projects: https://jpenniman.blogspot.com/2019/10/code-coverage-for-multiple-projects-in.html
 
-# Enforce HTTPS
+## Enforce HTTPS
 - https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-6.0&tabs=visual-studio
 
-# E2E (End-to-end) testing
+## E2E (End-to-end) testing
 - https://playwright.dev/dotnet/
 
-# Fluent Validation Doc
+## Fluent Validation Doc
 - https://docs.fluentvalidation.net/en/latest/inheritance.html
 
-# Codecov (coverage report)
+## Codecov (coverage report)
 - https://github.com/codecov/codecov-action
 
 
