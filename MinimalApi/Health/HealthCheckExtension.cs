@@ -16,7 +16,7 @@ public static class HealthCheckExtension
     
     public static void UseHealthChecks(this WebApplication app)
     {
-        app.MapHealthChecks("/health/health", new HealthCheckOptions
+        app.MapHealthChecks("/health", new HealthCheckOptions
         {
             ResponseWriter = async (context, report) =>
             {
