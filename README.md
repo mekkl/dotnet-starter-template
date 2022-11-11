@@ -1,4 +1,4 @@
-[![Build (Codecov)](https://github.com/mekkl/dotnet-starter-template/actions/workflows/dotnet-build-codecov.yml/badge.svg?branch=main)](https://github.com/mekkl/dotnet-starter-template/actions/workflows/dotnet-build-codecov.yml)
+[![Build](https://github.com/mekkl/dotnet-starter-template/actions/workflows/dotnet-build-codecov.yml/badge.svg?branch=main)](https://github.com/mekkl/dotnet-starter-template/actions/workflows/dotnet-build-codecov.yml)
 [![CodeQL](https://github.com/mekkl/dotnet-starter-template/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/mekkl/dotnet-starter-template/actions/workflows/codeql-analysis.yml)
 [![Coverage](https://codecov.io/gh/mekkl/dotnet-starter-template/branch/main/graph/badge.svg?token=UBNBXIPJ3P)](https://codecov.io/gh/mekkl/dotnet-starter-template)
 
