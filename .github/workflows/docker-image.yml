@@ -18,15 +18,23 @@ jobs:
 
     - name: Run Docker image
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
-      
+    
     - name: Check Health Probe
-      id: check_probe
-      run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $GITHUB_OUTPUT
-      
-    - name: Assert Health
-      uses: nick-fields/assert-action@v1.2.0
+      uses: lakuapik/gh-actions-http-status@v1
       with:
-        # Expected value
+        # List website urls in JSON (eg: ["http://github.com", "https://education.github.com"])
+        sites: "http://localhost:8081/health"
+        # List expected HTTP status codes in JSON (eg: [301, 200])
         expected: 200
-        # Actual value
-        actual: ${{ steps.check_probe.outputs.value }}
+      
+    #- name: Check Health Probe
+    #  id: check_probe
+    #  run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $GITHUB_OUTPUT
+      
+    #- name: Assert Health
+    #  uses: nick-fields/assert-action@v1.2.0
+    #  with:
+    #    # Expected value
+    #    expected: 200
+    #    # Actual value
+    #    actual: ${{ steps.check_probe.outputs.value }}
