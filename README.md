@@ -34,7 +34,6 @@ Starter dotnet project template with:
   * [Fluent Validation Doc](#fluent-validation-doc)
   * [Codecov (coverage report)](#codecov--coverage-report-)
 
-
 # Getting Started
 
 ## Setting up database for development
@@ -85,7 +84,6 @@ Then start the API application with the following command:
 ```
 dotnet run
 ```
-
 
 The output from the command should display which url and port the API is listining on:
 ```
@@ -290,4 +288,6 @@ See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetc
 ## Codecov (coverage report)
 - https://github.com/codecov/codecov-action
 
+## CodeQL
+- https://codeql.github.com/
 
