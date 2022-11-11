@@ -1,4 +1,4 @@
-name: "Build (Codecov)"
+name: "Build"
 
 on:
   push:
@@ -27,16 +27,17 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
       
-    - name: Test
-      run: dotnet test --filter "Category!=IntegrationTest" --no-build --verbosity normal
+    #- name: Test
+    #  run: dotnet test --filter "Category!=IntegrationTest" --no-build --verbosity normal
       
     - name: Test with coverage
-      run: dotnet test --filter "Category!=IntegrationTest" --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
+      run: dotnet test --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
       
     - name: Move coverage report
       run: mv ./Tests/TestResults/*/coverage.cobertura.xml ./Tests/TestResults/coverage.cobertura.xml
 
-    - uses: codecov/codecov-action@v3
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
         file: ./Tests/TestResults/coverage.cobertura.xml
