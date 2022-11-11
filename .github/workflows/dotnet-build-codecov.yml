@@ -1,4 +1,4 @@
-name: .NET Build (Codecov)
+name: "Build (Codecov)"
 
 on:
   push:

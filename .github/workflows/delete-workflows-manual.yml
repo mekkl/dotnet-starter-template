@@ -1,4 +1,4 @@
-name: Manual delete old workflow runs
+name: "Manual Workflow Cleanup"
 on:
   workflow_dispatch:
     inputs:
