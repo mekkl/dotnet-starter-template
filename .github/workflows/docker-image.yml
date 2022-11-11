@@ -20,7 +20,10 @@ jobs:
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
     
     - name: Check Health Probe
-      uses: lakuapik/gh-actions-http-status@v1
-      with:
-        sites: '[ "http://localhost:8081/health" ]'
-        expected: '[ 200 ]'
+      id: probe_info
+      run: |
+        content=`curl http://localhost:8081/health`
+        echo "::set-output name=packageJson::$content"
+        
+    - run: |
+        echo "${{fromJson(steps.set_var.outputs.packageJson).version}}"
