@@ -28,6 +28,6 @@ jobs:
     - name: Run Docker image
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
 
-    - name: Run POSTMAN collection
+    - name: Test
       run: |
         newman run ./Tests/health_probe_tests.json -r cli
