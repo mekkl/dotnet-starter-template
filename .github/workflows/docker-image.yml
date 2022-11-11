@@ -22,19 +22,5 @@ jobs:
     - name: Check Health Probe
       uses: lakuapik/gh-actions-http-status@v1
       with:
-        # List website urls in JSON (eg: ["http://github.com", "https://education.github.com"])
-        sites: "http://localhost:8081/heaasdflth"
-        # List expected HTTP status codes in JSON (eg: [301, 200])
-        expected: 200
-      
-    #- name: Check Health Probe
-    #  id: check_probe
-    #  run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $GITHUB_OUTPUT
-      
-    #- name: Assert Health
-    #  uses: nick-fields/assert-action@v1.2.0
-    #  with:
-    #    # Expected value
-    #    expected: 200
-    #    # Actual value
-    #    actual: ${{ steps.check_probe.outputs.value }}
+        sites: '[ "http://localhost:8081/health" ]'
+        expected: '[ 200 ]'
