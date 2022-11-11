@@ -20,7 +20,8 @@ jobs:
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
       
     - name: Check Health Probe
-      run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $env:HEALTH_STATUS
+      id: check_probe
+      run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $GITHUB_OUTPUT
       
     - name: Assert Health
       uses: nick-fields/assert-action@v1.2.0
@@ -28,4 +29,4 @@ jobs:
         # Expected value
         expected: 200
         # Actual value
-        actual: ${{ env.HEALTH_STATUS }}
+        actual: ${{ steps.check_probe.outputs.value }}
