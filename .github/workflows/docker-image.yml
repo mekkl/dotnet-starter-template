@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Integration Test
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
       
     - name: Check Health Probe
-      run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $HEALTH_STATUS
+      run: curl -o /dev/null -s -w "%{http_code}\n"  http://localhost:8081/health >> $env:HEALTH_STATUS
       
     - name: Assert Health
       uses: nick-fields/assert-action@v1.2.0
