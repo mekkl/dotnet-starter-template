@@ -72,7 +72,6 @@ jobs:
     - if: matrix.language == 'csharp' 
       name: Build .NET
       run: |
-        dotnet publish --os linux
         make bootstrap
         make release
 
