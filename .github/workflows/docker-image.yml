@@ -18,12 +18,21 @@ jobs:
 
     - name: Run Docker image
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
-    
+
     - name: Check Health Probe
-      id: probe_info
-      run: |
-        content=`curl http://localhost:8081/health`
-        echo "::set-output name=packageJson::$content"
-        
-    - run: |
-        echo "${{fromJson(steps.probe_info.outputs.packageJson).HealthStatus}}"
+      # You may pin to the exact commit or the version.
+      # uses: CamiloGarciaLaRotta/watermelon-http-client@054c532cb02e9bd533ba3579cf03f8c332061713
+      uses: CamiloGarciaLaRotta/watermelon-http-client@v1.5
+      with:
+        # Endpoint to query
+        url: "http://localhost:8081/health"
+        # HTTP method
+        method: get
+        # HTTP custom headers
+        #headers: # optional
+        # HTTP request payload
+        #data: # optional
+        # wether to fail upon error HTML responses (e.g. 400, 500)
+        fail_fast: true
+        # wether to print info-level statements or not
+        verbose: true
