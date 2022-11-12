@@ -15,9 +15,7 @@ public class DbHealthCheck : IHealthCheck
     
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new())
     {
-        var users = await _userRepository.ListAsync();
-        return users.Any() 
-            ? HealthCheckResult.Healthy("Connected to db") 
-            : HealthCheckResult.Unhealthy("No results from db");
+        await _userRepository.ListAsync();
+        return HealthCheckResult.Healthy("Successful call to db");
     }
 }

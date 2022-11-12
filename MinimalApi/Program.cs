@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using MinimalApi.Health;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
@@ -26,6 +27,12 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    // Initialise database
+    using var scope = app.Services.CreateScope();
+    
+    var initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitializer>();
+    await initializer.InitialiseAsync();
+    
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
