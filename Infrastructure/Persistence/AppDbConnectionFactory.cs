@@ -13,10 +13,9 @@ public class AppDbConnectionFactory : IDbConnectionFactory
     {
         _connectionString = config.GetConnectionString("DefaultConnection") ?? string.Empty;
     }
-    public async Task<DbConnection> CreateConnectionAsync()
+    public DbConnection CreateConnection()
     {
         var connection = new SqlConnection(_connectionString);
-        await connection.OpenAsync();
         return connection;
     }
 }

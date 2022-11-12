@@ -4,5 +4,5 @@ namespace Application.Common.Interfaces.Persistence;
 
 public interface IDbConnectionFactory
 {
-    public Task<DbConnection> CreateConnectionAsync();
+    public DbConnection CreateConnection();
 }

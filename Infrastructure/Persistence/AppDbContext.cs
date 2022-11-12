@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.Common.Interfaces.Persistence;
+using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
@@ -14,10 +15,15 @@ public class AppDbContext : DbContext
         _dbConnectionFactory = dbConnectionFactory;
     }
     
+    public virtual DbSet<User> Users { get; set; }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connection = _dbConnectionFactory.CreateConnectionAsync().Result;
-        optionsBuilder.UseSqlServer(connection);
+        var connection = _dbConnectionFactory.CreateConnection();
+        optionsBuilder.UseSqlServer(connection, builder =>
+        {
+            builder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+        });
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

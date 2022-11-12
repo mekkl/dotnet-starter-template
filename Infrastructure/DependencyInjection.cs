@@ -11,7 +11,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IDbConnectionFactory, AppDbConnectionFactory>();
-        services.AddDbContext<DbContext, AppDbContext>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<DbContext, AppDbContext>();
         services.AddDbContext<AppDbContext>();
         services.AddScoped<AppDbContextInitializer>();
         

@@ -195,7 +195,7 @@ add-migration <migration-name> -OutputDir Your\Directory
 ```
 
 ``` 
-dotnet ef migrations add <migration-name> -OutputDir --output-dir Your/Directory
+dotnet ef migrations add InitialCreate --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 ## Apply migration

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Persistence;
 
 public class AppDbContextInitializer
 {
-     private readonly ILogger<AppDbContextInitializer> _logger;
+    private readonly ILogger<AppDbContextInitializer> _logger;
     private readonly AppDbContext _context;
 
     public AppDbContextInitializer(ILogger<AppDbContextInitializer> logger, AppDbContext context)
@@ -50,6 +51,9 @@ public class AppDbContextInitializer
     private async Task TrySeedAsync()
     {
         // setup seed logic
+        if (!_context.Users.Any())
+            _context.Users.Add(new User { Name = "Mekkl" });
+        
         await _context.SaveChangesAsync();
     }
 }

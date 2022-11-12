@@ -58,10 +58,9 @@ public class WebAppFactory : WebApplicationFactory<IWebAppEntry>, IAsyncLifetime
             _connectionString = connectionString;
         }
     
-        public async Task<DbConnection> CreateConnectionAsync()
+        public DbConnection CreateConnection()
         {
             var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
             return connection;
         }
     }
