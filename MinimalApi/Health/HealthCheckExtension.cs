@@ -33,10 +33,8 @@ public static class HealthCheckExtension
                         HealthStatus = check.Value.Status,
                         Description = check.Value.Description ?? string.Empty,
                         Duration = check.Value.Duration,
-                        Exception = check.Value.Exception
                     }),
                     Duration = report.TotalDuration,
-            
                 };
 
                 context.Response.StatusCode = response.HealthStatus == HealthStatus.Healthy 

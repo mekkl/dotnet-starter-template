@@ -1,0 +1,21 @@
+services:
+  web:
+    build:
+      dockerfile: ./MinimalApi/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: yourStrong(!)Password
+    image: mcr.microsoft.com/mssql/server
+    restart: always
+    ports:
+      - 1433:1433
+    healthcheck:
+        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P yourStrong(!)Password -Q 'SELECT 1' || exit 1"]
+        interval: 10s
+        retries: 10
+        start_period: 10s
+        timeout: 3s     

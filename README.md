@@ -140,7 +140,23 @@ docker stop <CONTAINER_NAME>
 ```
 
 ## (TODO) Docker with HTTPS
-## (TODO) Docker with compose
+
+## Docker with compose
+
+Start compose:
+```
+docker compose up -d   
+```
+
+List containers:
+```
+docker ps
+```
+
+Shutdown:
+```
+docker compose down
+```
 
 ## Build and Test
 Command for building the project (run the command at the project root):
