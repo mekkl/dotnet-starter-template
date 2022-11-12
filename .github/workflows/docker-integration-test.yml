@@ -22,10 +22,13 @@ jobs:
       run: |
         npm install -g newman
 
-    - name: Build Docker image
+    - name: Run Db Docker image
+      run: docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+
+    - name: Build API Docker image
       run: docker build --tag minimal-api --file ./MinimalApi/Dockerfile .
 
-    - name: Run Docker image
+    - name: Run API Docker image
       run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
 
     - name: Test
