@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace MinimalApi.Health;
@@ -11,7 +12,8 @@ public static class HealthCheckExtension
     {
         services.AddHealthChecks()
             .AddCheck<LiveCheck>("live")
-            .AddCheck<ReadyCheck>("ready");
+            .AddCheck<ReadyCheck>("ready")
+            .AddDbContextCheck<DbContext>();
     }
     
     public static void UseHealthChecks(this WebApplication app)
