@@ -7,9 +7,9 @@ using Infrastructure;
 using Microsoft.Extensions.Hosting;
 
 using var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((_, services) =>
+    .ConfigureServices((builder, services) =>
     {
-        services.AddInfrastructure();
+        services.AddInfrastructure(builder.Configuration);
         services.AddApplication();
     })
     .Build();
