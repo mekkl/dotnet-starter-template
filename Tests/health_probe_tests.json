@@ -31,10 +31,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost/health",
+					"raw": "localhost:8081/health",
 					"host": [
 						"localhost"
 					],
+					"port": "8081",
 					"path": [
 						"health"
 					]
