@@ -24,8 +24,8 @@ jobs:
         
     - name: Start Db 
       run: |
-         docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/serv
-er:2022-latest
+         docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 \ 
+         -d mcr.microsoft.com/mssql/server:2022-latest
 
     - name: Build Docker image
       run: docker build --tag minimal-api --file ./MinimalApi/Dockerfile .
