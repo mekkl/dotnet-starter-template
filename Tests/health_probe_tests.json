@@ -25,7 +25,7 @@
 				}
 			],
 			"protocolProfileBehavior": {
-				"strictSSL": true
+				"strictSSL": false
 			},
 			"request": {
 				"method": "GET",
