@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -11,7 +12,7 @@ public static class HealthCheckExtension
     {
         services.AddHealthChecks()
             .AddCheck<LiveCheck>("live")
-            .AddCheck<ReadyCheck>("ready");
+            .AddCheck<DbHealthCheck>("DbHealth");
     }
     
     public static void UseHealthChecks(this WebApplication app)
@@ -31,16 +32,14 @@ public static class HealthCheckExtension
                         HealthStatus = check.Value.Status,
                         Description = check.Value.Description ?? string.Empty,
                         Duration = check.Value.Duration,
-                        Exception = check.Value.Exception
                     }),
                     Duration = report.TotalDuration,
-            
                 };
 
                 context.Response.StatusCode = response.HealthStatus == HealthStatus.Healthy 
                     ? (int)HttpStatusCode.OK 
                     : (int)HttpStatusCode.InternalServerError;
-
+                
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }
         });

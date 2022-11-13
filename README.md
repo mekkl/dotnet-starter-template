@@ -100,6 +100,9 @@ info: Microsoft.Hosting.Lifetime[0]
 ```
 
 ## Startup (with Docker)
+
+TODO: Setup docker network between app and db container
+
 First download and install Docker from [here](https://docs.docker.com/get-docker/).
 
 > A Microsoft guide can also be found [here](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows)
@@ -140,7 +143,27 @@ docker stop <CONTAINER_NAME>
 ```
 
 ## (TODO) Docker with HTTPS
-## (TODO) Docker with compose
+To be worked on...
+
+## Docker with compose
+Some notes on used composed setup.
+- When using Docker compose as is, the environment is set to production. Keep this in mind for flows that depends on specific environments
+- The connection string, with this setup, needs to have the `localhost` replaced with the service name of the database name in the `compose.yml` file. The production connection string therefore contains `db` instead of `localhost`
+
+Start compose:
+```
+docker compose up -d   
+```
+
+List containers:
+```
+docker ps
+```
+
+Shutdown:
+```
+docker compose down
+```
 
 ## Build and Test
 Command for building the project (run the command at the project root):
@@ -162,16 +185,17 @@ Command for generating coverage report from results:
 ```
 reportgenerator "-reports:*/TestResults/**/coverage.info" "-targetdir:Tests/CoverageReports" -reporttypes:html
 ```
-> :warning: Usage of **reportgenerator** see: https://github.com/danielpalme/ReportGenerator
+> Usage of **reportgenerator** see: https://github.com/danielpalme/ReportGenerator
 
 # Entity Framework
 
 Link: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=vs
 
-`Microsoft.EntityFrameworkCore.Design` This package is required for the Entity Framework Core Tools to work. Ensure your startup project is correct
-`Microsoft.EntityFrameworkCore.Tools` nuget enables entity framework commands!
+`Microsoft.EntityFrameworkCore.Design` This package is required for the Entity Framework Core Tools to work.
 
-> :warning: When using the Package Manager Console, set default Project to `Infrastructure`
+> `Microsoft.EntityFrameworkCore.Tools` nuget enables Package Manager Console commands
+
+> When using the Package Manager Console, set default Project to `Infrastructure`
 
 ## Add migration 
 ```
@@ -179,7 +203,7 @@ add-migration <migration-name> -OutputDir Your\Directory
 ```
 
 ``` 
-dotnet ef migrations add <migration-name> -OutputDir --output-dir Your/Directory
+dotnet ef migrations add InitialCreate --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 ## Apply migration

@@ -7,9 +7,9 @@ using Infrastructure;
 using Microsoft.Extensions.Hosting;
 
 using var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((_, services) =>
+    .ConfigureServices((builder, services) =>
     {
-        services.AddInfrastructure();
+        services.AddInfrastructure(builder.Configuration);
         services.AddApplication();
     })
     .Build();
@@ -18,7 +18,7 @@ BenchmarkRunner.Run<Benchmark>();
 
 // await host.RunAsync();
 
-static void Run(IServiceProvider services, string scope)
-{
-    Console.WriteLine($"Hello, World from scope={scope}!");
-}
+// static void Run(IServiceProvider services, string scope)
+// {
+//     Console.WriteLine($"Hello, World from scope={scope}!");
+// }

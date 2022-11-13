@@ -5,7 +5,7 @@
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
           <ExcludeByFile>
-            **/Model/**/*
+            **/Model/**/*,**/Migrations/**/*,**/BenchmarkConsole/**/,**/AppDbContextInitializer.cs
           </ExcludeByFile> <!-- Globbing filter -->
           <!-- <Format>lcov</Format> -->   
           <!-- <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*</Exclude> [Assembly-Filter]Type-Filter -->

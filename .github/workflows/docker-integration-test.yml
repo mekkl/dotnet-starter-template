@@ -22,12 +22,23 @@ jobs:
       run: |
         npm install -g newman
 
-    - name: Build Docker image
-      run: docker build --tag minimal-api --file ./MinimalApi/Dockerfile .
+    #- name: Run Db Docker image
+    #  run: docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
 
-    - name: Run Docker image
-      run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
+    #- name: Build API Docker image
+    #  run: docker build --tag minimal-api --file ./MinimalApi/Dockerfile .
+
+    #- name: Run API Docker image
+    #  run: docker run --name minimal-api-container -p 8081:80 -p 8082:443 -d minimal-api
+
+    - name: Run Docker Compose
+      run: docker compose up -d
+      
+    - name: Wait for startup
+      uses: kibertoad/wait-action@1.0.1
+      with:
+        time: 10s
 
     - name: Test
       run: |
-        newman run ./Tests/health_probe_tests.json -r cli
+        newman run ./Tests/Newman/health_probe_tests.json -r cli --verbose --insecure

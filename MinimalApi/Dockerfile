@@ -8,6 +8,8 @@ WORKDIR /src
 COPY ["MinimalApi/MinimalApi.csproj", "MinimalApi/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
 COPY ["Application/Application.csproj", "Application/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Shared/Shared.csproj", "Shared/"]
 RUN dotnet restore "MinimalApi/MinimalApi.csproj"
 COPY . .
 WORKDIR "/src/MinimalApi"

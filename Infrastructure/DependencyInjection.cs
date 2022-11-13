@@ -1,11 +1,22 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Common.Interfaces.Persistence;
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IDbConnectionFactory, AppDbConnectionFactory>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<DbContext, AppDbContext>();
+        services.AddDbContext<AppDbContext>();
+        services.AddScoped<AppDbContextInitializer>();
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
+        
         return services;
     }
 }
