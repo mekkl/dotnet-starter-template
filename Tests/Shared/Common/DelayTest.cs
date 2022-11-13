@@ -17,7 +17,7 @@ public class DelayTest
         await Delay.Seconds(seconds);
         sw.Stop();
         
-        sw.Elapsed.Milliseconds.Should().BeGreaterOrEqualTo((seconds * 1000) - MsMargin);
+        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo((seconds * 1000) - MsMargin);
     }
     
     [Theory]
