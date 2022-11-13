@@ -9,7 +9,14 @@ public static class ConfigurationExtension
         var config = configuration[name];
         if (config is null) 
             return default;
-        
-        return (T)Convert.ChangeType(config, typeof(T));
+
+        try
+        {
+            return (T)Convert.ChangeType(config, typeof(T));
+        }
+        catch (FormatException _)
+        {
+            return default;
+        }
     }
 }
