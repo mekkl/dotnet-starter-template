@@ -37,7 +37,7 @@ jobs:
     - name: Sleep to wait
       uses: kibertoad/wait-action@1.0.1
       with:
-        time: 10s
+        time: 3s
 
     - name: Test
       run: |
