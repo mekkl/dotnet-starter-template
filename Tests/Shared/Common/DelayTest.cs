@@ -29,6 +29,6 @@ public class DelayTest
         await Delay.Milliseconds(milliseconds);
         sw.Stop();
         
-        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(milliseconds + msMargin);
+        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(milliseconds - msMargin);
     }
 }
