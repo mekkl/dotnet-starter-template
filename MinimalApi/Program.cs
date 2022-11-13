@@ -6,6 +6,11 @@ using MinimalApi.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", true, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .Build();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -28,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
 
@@ -68,5 +73,12 @@ app.UseSwaggerUI(options =>
 
 app.UseHealthChecks();
 app.UseHttpsRedirection();
+
+app.MapGet("/ping", () => "pong")
+    .WithName("Ping")
+    .WithDisplayName("Ping")
+    .WithSummary("Ping pong endpoint")
+    .WithDescription("Get a pong response from server")
+    .WithOpenApi();
 
 app.Run();
