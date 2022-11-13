@@ -12,7 +12,7 @@ public class AppDbConnectionFactory : IDbConnectionFactory
         
     public AppDbConnectionFactory(IConfiguration config)
     {
-        _connectionString = config.GetOrDefault<string>("ConnectionStrings.DefaultConnection") ?? string.Empty;
+        _connectionString = config.GetOrDefault<string>("ConnectionStrings:DefaultConnection") ?? string.Empty;
     }
     public DbConnection CreateConnection()
     {
