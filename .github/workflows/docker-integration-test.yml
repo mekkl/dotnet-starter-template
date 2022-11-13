@@ -41,4 +41,4 @@ jobs:
 
     - name: Test
       run: |
-        newman run ./Tests/health_probe_tests.json -r cli
+        newman run ./Tests/Newman/health_probe_tests.json -r cli

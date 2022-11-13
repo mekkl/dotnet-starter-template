@@ -4,8 +4,8 @@ services:
     build:
       dockerfile: ./MinimalApi/Dockerfile
     ports:
-      - "8081:80"
-      - "8082:443"
+      - "8080:80"
+      - "8081:443"
     links:
       - db:1433
   db:
