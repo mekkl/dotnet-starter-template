@@ -1,7 +1,8 @@
-﻿namespace Domain.Model;
+﻿using Domain.Common;
 
-public record User
+namespace Domain.Model;
+
+public record User : BaseEntity
 {
-    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }

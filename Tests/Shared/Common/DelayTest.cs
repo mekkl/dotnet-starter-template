@@ -6,6 +6,8 @@ namespace Tests.Shared.Common;
 
 public class DelayTest
 {
+    private const int MsMargin = 10;
+
     [Theory]
     [InlineData(2)]
     [InlineData(4)]
@@ -15,7 +17,7 @@ public class DelayTest
         await Delay.Seconds(seconds);
         sw.Stop();
         
-        sw.Elapsed.Seconds.Should().BeGreaterOrEqualTo(seconds);
+        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo((seconds * 1000) - MsMargin);
     }
     
     [Theory]
@@ -24,11 +26,10 @@ public class DelayTest
     [InlineData(1100)]
     public async Task Delay_Milliseconds_ExpectWithinRange(int milliseconds)
     {
-        const int msMargin = 10;
         var sw = Stopwatch.StartNew();
         await Delay.Milliseconds(milliseconds);
         sw.Stop();
         
-        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(milliseconds - msMargin);
+        sw.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(milliseconds - MsMargin);
     }
 }

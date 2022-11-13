@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Domain.Common;
+using FluentAssertions;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -7,23 +8,23 @@ namespace Tests.Infrastructure.Persistence;
 
 public class RepositoryTest
 {
-    private readonly Repository<object> _sut;
-    private readonly Mock<DbSet<object>> _dbSet;
+    private readonly Repository<TestEntity> _sut;
+    private readonly Mock<DbSet<TestEntity>> _dbSet;
 
     public RepositoryTest()
     {
-        _dbSet = new Mock<DbSet<object>>();
+        _dbSet = new Mock<DbSet<TestEntity>>();
         var contextMock = new Mock<DbContext>();
-        contextMock.Setup(mock => mock.Set<object>())
+        contextMock.Setup(mock => mock.Set<TestEntity>())
             .Returns(_dbSet.Object);
-        _sut = new Repository<object>(contextMock.Object);
+        _sut = new Repository<TestEntity>(contextMock.Object);
     }
 
     [Fact]
     public async Task AddAsync_ShouldInvokeAddAsync_WhenCalled()
     {
         // Arrange
-        var obj = new object();
+        var obj = new TestEntity();
 
         // Act
 
@@ -37,13 +38,13 @@ public class RepositoryTest
     public async Task AddRangeAsync_ShouldInvokeAddRangeAsync_WhenCalled()
     {
         // Arrange
-        var obj = new object();
+        var obj = new TestEntity();
 
         // Act
         await _sut.AddRangeAsync(new[] { obj });
 
         // Assert
-        _dbSet.Verify(mock => mock.AddRangeAsync(It.IsAny<IEnumerable<object>>(), It.IsAny<CancellationToken>()),
+        _dbSet.Verify(mock => mock.AddRangeAsync(It.IsAny<IEnumerable<TestEntity>>(), It.IsAny<CancellationToken>()),
             Times.Once);
     }
 
@@ -52,7 +53,7 @@ public class RepositoryTest
     {
         // Arrange
         var id = string.Empty;
-        var expected = new object();
+        var expected = new TestEntity();
 
         // Act
         _dbSet.Setup(mock => mock.FindAsync(It.IsAny<string>()))
@@ -70,7 +71,7 @@ public class RepositoryTest
     {
         // Arrange
         var id = string.Empty;
-        object removeEntity = new();
+        var removeEntity = new TestEntity();
 
         // Act
         _dbSet.Setup(mock => mock.FindAsync(It.IsAny<string>()))
@@ -90,11 +91,13 @@ public class RepositoryTest
 
         // Act
         _dbSet.Setup(mock => mock.FindAsync(It.IsAny<string>()))
-            .ReturnsAsync(null);
+            .ReturnsAsync((TestEntity?)null);
 
         await _sut.RemoveAsync(id);
 
         // Assert
-        _dbSet.Verify(mock => mock.Remove(It.IsAny<object>()), Times.Never);
+        _dbSet.Verify(mock => mock.Remove(It.IsAny<TestEntity>()), Times.Never);
     }
+
+    public record TestEntity : BaseEntity;
 }

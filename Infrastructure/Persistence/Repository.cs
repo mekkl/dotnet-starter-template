@@ -1,10 +1,11 @@
 ﻿using System.Linq.Expressions;
 using Application.Common.Interfaces.Persistence;
+using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
     protected DbContext Context;
     internal readonly DbSet<TEntity> DbSet;
