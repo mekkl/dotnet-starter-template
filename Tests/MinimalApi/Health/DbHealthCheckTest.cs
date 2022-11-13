@@ -15,7 +15,10 @@ public class DbHealthCheckTest
     public DbHealthCheckTest()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
-        _sut = new DbHealthCheck(_userRepositoryMock.Object);
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(mock => mock.UserRepository)
+            .Returns(_userRepositoryMock.Object);
+        _sut = new DbHealthCheck(unitOfWorkMock.Object);
     }
 
     [Fact]

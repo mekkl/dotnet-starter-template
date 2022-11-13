@@ -18,7 +18,7 @@ BenchmarkRunner.Run<Benchmark>();
 
 // await host.RunAsync();
 
-static void Run(IServiceProvider services, string scope)
-{
-    Console.WriteLine($"Hello, World from scope={scope}!");
-}
+// static void Run(IServiceProvider services, string scope)
+// {
+//     Console.WriteLine($"Hello, World from scope={scope}!");
+// }

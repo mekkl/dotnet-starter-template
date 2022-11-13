@@ -2,5 +2,6 @@
 
 public interface IUnitOfWork : IDisposable
 {
+    public IUserRepository UserRepository { get; }
     Task CommitAsync();
 }

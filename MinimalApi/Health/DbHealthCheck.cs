@@ -1,21 +1,21 @@
 ﻿using Application.Common.Interfaces.Persistence;
-using Domain.Model;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace MinimalApi.Health;
 
 public class DbHealthCheck : IHealthCheck
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DbHealthCheck(IUserRepository userRepository)
+    public DbHealthCheck(IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
-    
-    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new())
+
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,
+        CancellationToken cancellationToken = new())
     {
-        await _userRepository.ListAsync();
+        await _unitOfWork.UserRepository.ListAsync(cancellationToken);
         return HealthCheckResult.Healthy("Successful call to db");
     }
 }

@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddTransient<DbContext, AppDbContext>();
         services.AddDbContext<AppDbContext>();
         services.AddScoped<AppDbContextInitializer>();
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
         
         return services;
     }

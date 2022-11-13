@@ -6,13 +6,12 @@ namespace Infrastructure.Persistence;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly DbContext _context;
-    public IUserRepository UserRepository { get; private set; }
+    public IUserRepository UserRepository { get; }
     
-    public UnitOfWork(DbContext context)
+    public UnitOfWork(DbContext context, IUserRepository userRepository)
     {
         _context = context;
-
-        UserRepository = new UserRepository(context);
+        UserRepository = userRepository;
     }
     
     public void Dispose()
