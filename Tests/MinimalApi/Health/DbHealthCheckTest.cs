@@ -21,7 +21,7 @@ public class DbHealthCheckTest
     [Fact]
     public async Task CheckHealthAsync_HasDbConnection_ExpectHealthy()
     {
-        _userRepositoryMock.Setup(mock => mock.ListAsync())
+        _userRepositoryMock.Setup(mock => mock.ListAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(Enumerable.Empty<User>()));
 
         var actual = await _sut.CheckHealthAsync(It.IsAny<HealthCheckContext>(), CancellationToken.None);
@@ -33,7 +33,7 @@ public class DbHealthCheckTest
     [Fact]
     public async Task CheckHealthAsync_DbConnectionError_ExpectException()
     {
-        _userRepositoryMock.Setup(mock => mock.ListAsync())
+        _userRepositoryMock.Setup(mock => mock.ListAsync(It.IsAny<CancellationToken>()))
             .Throws<Exception>();
 
         var act = async () => await _sut.CheckHealthAsync(It.IsAny<HealthCheckContext>(), CancellationToken.None);

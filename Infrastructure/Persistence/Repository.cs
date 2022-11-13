@@ -15,38 +15,39 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         DbSet = context.Set<TEntity>();
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity, CancellationToken token = default)
     {
-        await DbSet.AddAsync(entity);
+        await DbSet.AddAsync(entity, token);
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken token = default)
     {
-        await DbSet.AddRangeAsync(entities);
+        await DbSet.AddRangeAsync(entities, token);
     }
 
-    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token = default)
     {
-        return await DbSet.Where(predicate).ToListAsync();
+        return await DbSet.Where(predicate).ToListAsync(token);
     }
 
-    public async Task<TEntity> GetAsync(string id)
+    public async ValueTask<TEntity?> GetAsync(string id)
     {
         return await DbSet.FindAsync(id);
     }
 
-    public async Task<IEnumerable<TEntity>> ListAsync()
+    public async Task<IEnumerable<TEntity>> ListAsync(CancellationToken token = default)
     {
-        return await DbSet.ToListAsync();
+        return await DbSet.ToListAsync(token);
     }
 
     public async Task RemoveAsync(string id)
     {
         var entity = await GetAsync(id);
-        DbSet.Remove(entity);
+        if (entity is not null)
+            DbSet.Remove(entity);
     }
 
-    public Task UpsertAsync(TEntity entity)
+    public Task UpsertAsync(TEntity entity, CancellationToken token = default)
     {
         throw new NotImplementedException();
     } 
