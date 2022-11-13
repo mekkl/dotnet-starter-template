@@ -40,8 +40,8 @@ public static class HealthCheckExtension
                     ? (int)HttpStatusCode.OK 
                     : (int)HttpStatusCode.InternalServerError;
                 var json = JsonSerializer.Serialize(response);
-                var bytes = Encoding.UTF8.GetBytes(json);
-                context.Response.ContentLength = bytes.Length;
+                // var bytes = Encoding.UTF8.GetBytes(json);
+                // context.Response.ContentLength = bytes.Length;
                 
                 await context.Response.WriteAsync(json);
             }
