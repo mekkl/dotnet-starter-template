@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.OpenApi.Models;
 using MinimalApi.Health;
+using MinimalApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,10 +40,11 @@ builder.Services.AddAppHealthChecks();
 
 var app = builder.Build();
 
+app.UseErrorHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 
     // Initialise and seed database
@@ -71,6 +73,7 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
+app.UsePerformanceMiddleware();
 app.UseHealthChecks();
 app.UseHttpsRedirection();
 
