@@ -212,7 +212,7 @@ update-database
 ```
 
 ``` 
-> dotnet ef database update 
+dotnet ef database update --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 ## Apply specific migration (rollback to previous)
@@ -221,7 +221,7 @@ Update-Database <previous-migration-name>
 ```
 
 ```
-dotnet ef database update <previous-migration-name>
+dotnet ef database update <previous-migration-name> --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 ## Remove migration (latest migration)
@@ -230,7 +230,7 @@ dotnet ef database update <previous-migration-name>
 ```
 
 ```
-dotnet ef migrations remove
+dotnet ef migrations remove --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 ## List migrations
@@ -239,7 +239,7 @@ Get-Migration
 ```
 
 ```
-dotnet ef migrations list
+dotnet ef migrations list --project .\Infrastructure\ --startup-project .\MinimalApi\
 ```
 
 # Nuget versions update
