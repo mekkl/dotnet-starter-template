@@ -1,8 +1,9 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Persistence;
-using Microsoft.OpenApi.Models;
+using MinimalApi.Extensions;
 using MinimalApi.Health;
+using MinimalApi.HostedServices;
 using MinimalApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,31 +13,13 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
     .Build();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = ".NET 7 swagger",
-        Description = ".NET 7 starter template swagger doc",
-        TermsOfService = new Uri("https://github.com/mekkl/dotnet-starter-template"),
-        Contact = new OpenApiContact
-        {
-            Name = "Mekkl",
-            Url = new Uri("https://github.com/mekkl")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "MIT License",
-            Url = new Uri("https://github.com/mekkl/dotnet-starter-template/blob/main/LICENSE")
-        }
-    });
-});
+builder.Services.AddSwagger();
 
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
+
+builder.Services.AddHostedService<TimedHostedService>();
 
 var app = builder.Build();
 
@@ -66,12 +49,7 @@ else
     app.UseHsts();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-    options.RoutePrefix = string.Empty;
-});
+app.UseSwaggerSetup();
 
 app.UsePerformanceMiddleware();
 app.UseHealthChecks();
