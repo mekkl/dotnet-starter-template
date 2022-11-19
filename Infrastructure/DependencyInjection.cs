@@ -1,4 +1,6 @@
-﻿using Application.Common.Interfaces.Persistence;
+﻿using Application.Common.Interfaces.Adapters;
+using Application.Common.Interfaces.Persistence;
+using Infrastructure.Adapters;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>();
         services.AddScoped<AppDbContextInitializer>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+        services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
         
         return services;
     }

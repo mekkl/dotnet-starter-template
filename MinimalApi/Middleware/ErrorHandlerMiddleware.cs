@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Application.Common.Interfaces.Adapters;
 using Shared.Attributes;
 
 namespace MinimalApi.Middleware;
@@ -14,7 +15,7 @@ public class ErrorHandlerMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context, IHostEnvironment hostEnvironment, ILogger<ErrorHandlerMiddleware> logger)
+    public async Task Invoke(HttpContext context, IHostEnvironment hostEnvironment, ILoggerAdapter<ErrorHandlerMiddleware> logger)
     {
         try
         {

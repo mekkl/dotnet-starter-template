@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Application.Common.Interfaces.Adapters;
+
 namespace MinimalApi.Middleware;
 
 public class PerformanceMiddleware
@@ -10,7 +12,7 @@ public class PerformanceMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context, ILogger<PerformanceMiddleware> logger)
+    public async Task Invoke(HttpContext context, ILoggerAdapter<PerformanceMiddleware> logger)
     {
         var stopwatch = Stopwatch.StartNew();
         try
