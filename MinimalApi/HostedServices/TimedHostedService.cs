@@ -11,7 +11,13 @@ public class TimedHostedService : IHostedService
     public TimedHostedService(IServiceProvider serviceProvider)
         => _serviceProvider = serviceProvider;
 
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        Task.Run(() => DoWork(cancellationToken), cancellationToken);
+        return Task.CompletedTask;
+    }
+
+    private async Task DoWork(CancellationToken cancellationToken)
     {
         using var scope = _serviceProvider.CreateScope();
         var logger = _serviceProvider.GetRequiredService<ILogger<TimedHostedService>>();
