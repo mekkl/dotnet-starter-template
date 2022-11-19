@@ -1,8 +1,10 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Shared.Attributes;
 
 namespace MinimalApi.Middleware;
 
+[IgnoreCoverage]
 public class ErrorHandlerMiddleware
 {
     private readonly RequestDelegate _next;
