@@ -1,6 +1,8 @@
 using Application;
+using Application.Admin.Queries;
 using Infrastructure;
 using Infrastructure.Persistence;
+using MediatR;
 using MinimalApi.Extensions;
 using MinimalApi.Health;
 using MinimalApi.HostedServices;
@@ -60,6 +62,13 @@ app.MapGet("/ping", () => "pong")
     .WithDisplayName("Ping")
     .WithSummary("Ping pong endpoint")
     .WithDescription("Get a pong response from server")
+    .WithOpenApi();
+
+app.MapGet("/admin/time", (IMediator mediator) => mediator.Send(new GetServerTimeQuery()))
+    .WithName("Server Time")
+    .WithDisplayName("Server Time")
+    .WithSummary("Display server time")
+    .WithDescription("Get the current server time")
     .WithOpenApi();
 
 app.Run();
