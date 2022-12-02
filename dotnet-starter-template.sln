@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C1FD711D-700F-456B-A3E1-B5A62DC46A71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApplication1", "AvaloniaApplication1\AvaloniaApplication1.csproj", "{5476C3B2-0C2C-4993-8753-1B0EB1575EA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{C1FD711D-700F-456B-A3E1-B5A62DC46A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1FD711D-700F-456B-A3E1-B5A62DC46A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1FD711D-700F-456B-A3E1-B5A62DC46A71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5476C3B2-0C2C-4993-8753-1B0EB1575EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5476C3B2-0C2C-4993-8753-1B0EB1575EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5476C3B2-0C2C-4993-8753-1B0EB1575EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5476C3B2-0C2C-4993-8753-1B0EB1575EA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

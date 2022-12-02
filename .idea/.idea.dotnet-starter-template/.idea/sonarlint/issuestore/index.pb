@@ -1,0 +1,19 @@
+
+X
+(Shared/Extensions/EnumeratorExtension.cs,f\6\f681676893e4c375d95d67752238655ddc5baa03
+b
+2Tests/Shared/Extensions/EnumeratorExtensionTest.cs,6\3\63acd7cec822e1beddce5b3f2612156b3717698f
+E
+MinimalApi/Program.cs,9\1\91f16ecd6fb2d85283e7bd80e865738e705947c4
+O
+BenchmarkConsole/QuickSearch.cs,f\2\f2d122b00e01fb23efb8cd623dbf19d9d3332e86
+K
+BenchmarkConsole/Program.cs,5\5\5582e58276a78b93e5eb10076cc72ee7678656e6
+S
+#AvaloniaApplication1/ViewLocator.cs,6\1\61f29a01d1d96cc34209922f1d2ee0abdcd4ea8c
+`
+0AvaloniaApplication1/AvaloniaApplication1.csproj,7\2\72070f1625c6cd40c2d3b4007a9d9fb0f47980f6
+P
+ AvaloniaApplication1/Icons.axaml,8\8\889a61a71be03a58463516ef2b2fcf8710c28c49
+S
+#AvaloniaApplication1/QuickSearch.cs,0\f\0fd635130a546b9aaf1e63435dd89b7a91084905

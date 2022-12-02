@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using MinimalApi.Extensions;
 using MinimalApi.Health;
 using MinimalApi.HostedServices;
+using MinimalApi.Hubs;
 using MinimalApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddSwagger();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddHostedService<TimedHostedService>();
 
@@ -54,6 +57,8 @@ app.UseSwaggerSetup();
 app.UsePerformanceMiddleware();
 app.UseHealthChecks();
 app.UseHttpsRedirection();
+
+app.MapHub<TestHub>("/hubs/ping");
 
 app.MapGet("/ping", () => "pong")
     .WithName("Ping")

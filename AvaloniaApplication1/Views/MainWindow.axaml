@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaApplication1.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="50"
+        x:Class="AvaloniaApplication1.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaApplication1"
+        Width="1000"
+        Height="50"
+        SystemDecorations="None"
+        WindowStartupLocation="CenterScreen"
+
+        TransparencyLevelHint="Transparent"
+        Background="Transparent">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="TextBox /template/ Border#PART_BorderElement">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </Window.Styles>
+
+    <Border CornerRadius="40" Background="#161B2D" Padding="0" >
+        <Border CornerRadius="40" BorderBrush="#3c3e44" BorderThickness="3">
+        
+        <StackPanel Orientation="Horizontal" Margin="15 0">
+         
+            <PathIcon Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      Data="{StaticResource search_regular}"
+                      Margin="12 0 10 0">
+            </PathIcon>
+            <TextBox
+                Background="Transparent"
+                FontSize="20"
+                Padding="5 0"
+                Text="{Binding SearchString, Mode=TwoWay}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                BorderThickness="0" KeyDown="InputElement_OnKeyDown">
+            </TextBox>
+        </StackPanel>
+        </Border>
+    </Border>
+</Window>
