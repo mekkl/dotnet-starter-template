@@ -19,6 +19,9 @@ jobs:
         with:
           java-version: 1.11
           
+      - name: Install dotnet-coverage
+        run: dotnet tool install --global dotnet-coverage
+          
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
@@ -51,7 +54,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"mekkl_dotnet-starter-template" /o:"c8f2e925-eef3-4fc5-9cb5-d7748e0f9faf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="Tests/TestResults/*/coverage.cobertura.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"mekkl_dotnet-starter-template" /o:"c8f2e925-eef3-4fc5-9cb5-d7748e0f9faf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml"
           dotnet build
-          dotnet test --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
+          dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
