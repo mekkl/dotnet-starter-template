@@ -53,4 +53,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"mekkl_dotnet-starter-template" /o:"c8f2e925-eef3-4fc5-9cb5-d7748e0f9faf" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build
+          dotnet test --collect:"XPlat Code Coverage" --settings Tests/coverlet.runsettings
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
