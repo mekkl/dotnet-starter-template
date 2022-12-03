@@ -7,7 +7,7 @@
           <ExcludeByFile>
             **/Model/**/*,**/Domain/Common/**/*,**/Migrations/**/*,**/BenchmarkConsole/**/,**/AppDbContextInitializer.cs
           </ExcludeByFile> <!-- Globbing filter -->
-          <!-- <Format>lcov</Format> -->   
+          <Format>cobertura,opencover</Format>   
           <!-- <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*</Exclude> [Assembly-Filter]Type-Filter -->
           <!-- <Include>[coverlet.*]*,[*]Coverlet.Core*</Include> [Assembly-Filter]Type-Filter -->
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute,IgnoreCoverage</ExcludeByAttribute>
