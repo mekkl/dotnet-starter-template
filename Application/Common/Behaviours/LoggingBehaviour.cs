@@ -1,8 +1,10 @@
 ﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
+using Shared.Attributes;
 
 namespace Application.Common.Behaviours;
 
+[IgnoreCoverage]
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {
     private readonly ILogger _logger;
