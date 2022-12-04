@@ -16,7 +16,7 @@ public class HealthIntegrationTest : IClassFixture<WebAppFactory>
     }
 
     [Fact, Trait("Category", "IntegrationTest")]
-    public async Task Get_Health_ShouldRespondHealthy()
+    public async Task Get_ServerTime_ShouldRespondHealthy()
     {
         // Arrange
 
