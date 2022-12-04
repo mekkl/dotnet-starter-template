@@ -2,6 +2,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mekkl_dotnet-starter-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mekkl_dotnet-starter-template)
 [![CodeQL](https://github.com/mekkl/dotnet-starter-template/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/mekkl/dotnet-starter-template/actions/workflows/codeql-analysis.yml)
 [![Coverage](https://codecov.io/gh/mekkl/dotnet-starter-template/branch/main/graph/badge.svg?token=UBNBXIPJ3P)](https://codecov.io/gh/mekkl/dotnet-starter-template)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mekkl_dotnet-starter-template&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mekkl_dotnet-starter-template)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=mekkl_dotnet-starter-template&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=mekkl_dotnet-starter-template)
 
 # Introduction 
