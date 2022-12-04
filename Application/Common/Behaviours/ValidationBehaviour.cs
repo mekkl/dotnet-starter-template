@@ -1,10 +1,12 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using MediatR;
 using Shared.Attributes;
 
 namespace Application.Common.Behaviours;
 
 [IgnoreCoverage]
+[ExcludeFromCodeCoverage]
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;

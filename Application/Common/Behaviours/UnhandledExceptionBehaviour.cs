@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using System.Diagnostics.CodeAnalysis;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Attributes;
 
 namespace Application.Common.Behaviours;
 
 [IgnoreCoverage]
+[ExcludeFromCodeCoverage]
 public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse>
 {
     private readonly ILogger<TRequest> _logger;

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Attributes;
@@ -6,6 +7,7 @@ using Shared.Attributes;
 namespace Application.Common.Behaviours;
 
 [IgnoreCoverage]
+[ExcludeFromCodeCoverage]
 public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse>
 {
     private readonly Stopwatch _timer;
