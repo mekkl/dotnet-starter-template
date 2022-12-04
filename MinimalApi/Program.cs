@@ -64,7 +64,7 @@ app.MapGet("/ping", () => "pong")
     .WithDescription("Get a pong response from server")
     .WithOpenApi();
 
-app.MapGet("/admin/time", (IMediator mediator) => mediator.Send(new GetServerTimeQuery()))
+app.MapGet("/admin/servertime", (IMediator mediator) => mediator.Send(new GetServerTimeQuery()))
     .WithName("Server Time")
     .WithDisplayName("Server Time")
     .WithSummary("Display server time")
