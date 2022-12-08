@@ -1,4 +1,6 @@
-﻿using Application.Common.Interfaces.Persistence;
+﻿using Application.Common.Interfaces.Auth;
+using Application.Common.Interfaces.Persistence;
+using Infrastructure.Auth;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IJwtProvider, JwtProvider>();
+        
         services.AddSingleton<IDbConnectionFactory, AppDbConnectionFactory>();
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<DbContext, AppDbContext>();
