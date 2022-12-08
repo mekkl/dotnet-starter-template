@@ -1,12 +1,16 @@
 using Application;
 using Application.Admin.Queries;
+using Application.Auth.Commands;
 using Infrastructure;
 using Infrastructure.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Extensions;
 using MinimalApi.Health;
 using MinimalApi.HostedServices;
 using MinimalApi.Middleware;
+using MinimalApi.OptionsSetup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,13 @@ builder.Services.AddSwagger();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+builder.Services.ConfigureOptions<JwtOptionSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 builder.Services.AddHostedService<TimedHostedService>();
 
@@ -57,6 +68,9 @@ app.UsePerformanceMiddleware();
 app.UseHealthChecks();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapGet("/ping", () => "pong")
     .WithName("Ping")
     .WithDisplayName("Ping")
@@ -69,6 +83,14 @@ app.MapGet("/admin/servertime", (IMediator mediator) => mediator.Send(new GetSer
     .WithDisplayName("Server Time")
     .WithSummary("Display server time")
     .WithDescription("Get the current server time")
+    .WithOpenApi();
+
+app.MapPost("/auth/login", (IMediator mediator, [FromBody] LoginCommand loginCommand) 
+        => mediator.Send(loginCommand))
+    .WithName("Login")
+    .WithDisplayName("Login")
+    .WithSummary("Login user")
+    .WithDescription("Authenticates and login the member")
     .WithOpenApi();
 
 app.Run();
