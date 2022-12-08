@@ -6,6 +6,31 @@ public static class SwaggerExtension
 {
     public static void AddSwagger(this IServiceCollection services)
     {
+        var securityScheme = new OpenApiSecurityScheme()
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "JSON Web Token based security",
+        };
+
+        var securityReq = new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        };
+        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
@@ -26,6 +51,9 @@ public static class SwaggerExtension
                     Url = new Uri("https://github.com/mekkl/dotnet-starter-template/blob/main/LICENSE")
                 }
             });
+            
+            options.AddSecurityDefinition("Bearer", securityScheme);
+            options.AddSecurityRequirement(securityReq);
         });
     }
 

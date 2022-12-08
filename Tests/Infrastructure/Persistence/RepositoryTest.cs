@@ -99,5 +99,7 @@ public class RepositoryTest
         _dbSet.Verify(mock => mock.Remove(It.IsAny<TestEntity>()), Times.Never);
     }
 
-    public record TestEntity : BaseEntity;
+    public class TestEntity : BaseEntity
+    {
+    }
 }

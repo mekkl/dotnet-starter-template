@@ -2,7 +2,7 @@
 
 namespace Domain.Model;
 
-public class User : BaseEntity
+public class Member : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 }
