@@ -1,11 +1,13 @@
 using Application;
 using Application.Admin.Queries;
 using Application.Auth.Commands;
+using Domain.Auth.Enums;
 using Infrastructure;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using MinimalApi.Auth;
 using MinimalApi.Extensions;
 using MinimalApi.Health;
 using MinimalApi.HostedServices;
@@ -25,7 +27,15 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
 
-builder.Services.AddAuthorization();
+builder.Services.AddCors();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Permission.ReadMember.ToString(),
+        policy => policy.RequireClaim("Permission", Permission.ReadMember.ToString()));
+    options.AddPolicy(Permission.AccessMembers.ToString(),
+        policy => policy.RequireClaim("Permission", Permission.AccessMembers.ToString()));
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
 
@@ -68,6 +78,7 @@ app.UsePerformanceMiddleware();
 app.UseHealthChecks();
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -83,6 +94,13 @@ app.MapGet("/admin/servertime", (IMediator mediator) => mediator.Send(new GetSer
     .WithDisplayName("Server Time")
     .WithSummary("Display server time")
     .WithDescription("Get the current server time")
+    .WithOpenApi();
+
+app.MapGet("/auth/debug",  [HasPermission(Permission.ReadMember)] () => "OK")
+    .WithName("Auth Debug")
+    .WithDisplayName("Auth Debug")
+    .WithSummary("Auth Debug endpoint")
+    .WithDescription("Test auth related code")
     .WithOpenApi();
 
 app.MapPost("/auth/login", (IMediator mediator, [FromBody] LoginCommand loginCommand) 
