@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class UserRepository : Repository<User>, IUserRepository
+public class MemberRepository : Repository<Member>, IMemberRepository
 {
-    public UserRepository(DbContext context) : base(context)
+    public MemberRepository(DbContext context) : base(context)
     {
     }
 }

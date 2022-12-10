@@ -1,4 +1,4 @@
-﻿using Domain.Auth;
+﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,13 +8,9 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
 {
     public void Configure(EntityTypeBuilder<Permission> builder)
     {
-        builder.ToTable("Permissions");
+        builder.ToTable(nameof(Permission));
         
         builder.HasKey(permission => permission.Id);
-
-        var permissions = Enum.GetValues<Domain.Auth.Enums.Permission>()
-            .Select(permission => new Permission { Id = (int)permission, Name = permission.ToString() });
-
-        builder.HasData(permissions);
+        builder.Property(permission => permission.Id).ValueGeneratedNever();
     }
 }

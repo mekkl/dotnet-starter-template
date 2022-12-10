@@ -15,7 +15,9 @@ public static class DependencyInjection
         services.AddSingleton<IJwtProvider, JwtProvider>();
         
         services.AddSingleton<IDbConnectionFactory, AppDbConnectionFactory>();
-        services.AddTransient<IUserRepository, UserRepository>();
+        
+        services.AddTransient<IMemberRepository, MemberRepository>();
+        
         services.AddTransient<DbContext, AppDbContext>();
         services.AddDbContext<AppDbContext>();
         services.AddScoped<AppDbContextInitializer>();

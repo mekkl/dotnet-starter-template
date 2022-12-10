@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRolesAndPermissions : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +15,7 @@ namespace Infrastructure.Migrations
                 name: "Member",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -26,29 +24,27 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permissions",
+                name: "Permission",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                    table.PrimaryKey("PK_Permission", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Role",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Role", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,11 +52,11 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     MembersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    RolesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MemberRole", x => new { x.MembersId, x.RoleId });
+                    table.PrimaryKey("PK_MemberRole", x => new { x.MembersId, x.RolesId });
                     table.ForeignKey(
                         name: "FK_MemberRole_Member_MembersId",
                         column: x => x.MembersId,
@@ -68,9 +64,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MemberRole_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
+                        name: "FK_MemberRole_Role_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -86,46 +82,23 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_RolePermission", x => new { x.RoleId, x.PermissionId });
                     table.ForeignKey(
-                        name: "FK_RolePermission_Permissions_PermissionId",
+                        name: "FK_RolePermission_Permission_PermissionId",
                         column: x => x.PermissionId,
-                        principalTable: "Permissions",
+                        principalTable: "Permission",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RolePermission_Roles_RoleId",
+                        name: "FK_RolePermission_Role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
+                        principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Permissions",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "AccessMembers" },
-                    { 2, "ReadMember" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Admin" },
-                    { 2, "Registered" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RolePermission",
-                columns: new[] { "PermissionId", "RoleId" },
-                values: new object[] { 2, 1 });
-
             migrationBuilder.CreateIndex(
-                name: "IX_MemberRole_RoleId",
+                name: "IX_MemberRole_RolesId",
                 table: "MemberRole",
-                column: "RoleId");
+                column: "RolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermission_PermissionId",
@@ -146,10 +119,10 @@ namespace Infrastructure.Migrations
                 name: "Member");
 
             migrationBuilder.DropTable(
-                name: "Permissions");
+                name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Role");
         }
     }
 }

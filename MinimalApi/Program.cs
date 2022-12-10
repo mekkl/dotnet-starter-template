@@ -1,11 +1,12 @@
 using Application;
 using Application.Admin.Queries;
 using Application.Auth.Commands;
-using Domain.Auth.Enums;
+using Domain.Enums;
 using Infrastructure;
 using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Auth;
 using MinimalApi.Extensions;
@@ -29,13 +30,10 @@ builder.Services.AddAppHealthChecks();
 
 builder.Services.AddCors();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(Permission.ReadMember.ToString(),
-        policy => policy.RequireClaim("Permission", Permission.ReadMember.ToString()));
-    options.AddPolicy(Permission.AccessMembers.ToString(),
-        policy => policy.RequireClaim("Permission", Permission.AccessMembers.ToString()));
-});
+builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
 
@@ -96,7 +94,7 @@ app.MapGet("/admin/servertime", (IMediator mediator) => mediator.Send(new GetSer
     .WithDescription("Get the current server time")
     .WithOpenApi();
 
-app.MapGet("/auth/debug",  [HasPermission(Permission.ReadMember)] () => "OK")
+app.MapGet("/auth/debug",  [Permission(Permission.ReadMember)] () => "OK")
     .WithName("Auth Debug")
     .WithDisplayName("Auth Debug")
     .WithSummary("Auth Debug endpoint")

@@ -1,4 +1,4 @@
-﻿namespace Domain.Auth;
+﻿namespace Domain.Model;
 
 public class RolePermission
 {

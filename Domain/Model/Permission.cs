@@ -1,6 +1,8 @@
-﻿namespace Domain.Auth;
+﻿using Domain.Common;
 
-public class Permission
+namespace Domain.Model;
+
+public class Permission : BaseEntity
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
