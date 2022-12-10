@@ -51,9 +51,43 @@ public class AppDbContextInitializer
     private async Task TrySeedAsync()
     {
         // setup seed logic
-        if (!_context.Users.Any())
-            _context.Users.Add(new User { Name = "Mekkl" });
         
-        await _context.SaveChangesAsync();
+        // Initialize roles
+        // foreach (var role in Role.GetValues())
+        // {
+        //     if (await _context.Roles.FindAsync(role.Id) is null)
+        //         _context.Roles.Add(role);
+        // }
+        // await _context.SaveChangesAsync();
+        //
+        // // Initialize permissions
+        // var permissions = Enum.GetValues<Domain.Enums.Permission>()
+        //     .Select(permission => new Permission { Id = (int)permission, Name = permission.ToString() });
+        //
+        // foreach (var permission in permissions)
+        // {
+        //     if (await _context.Permissions.FindAsync(permission.Id) is null)
+        //         _context.Permissions.Add(permission);
+        // }
+        // await _context.SaveChangesAsync();
+        //
+        // // Initialize role permission relations
+        // var adminRole = await _context.Roles.Include(role => role.Permissions)
+        //     .SingleOrDefaultAsync(role => role.Id == Role.Admin.Id);
+        //
+        // var persistedPermissions = await _context.Permissions.Where(permission =>
+        //     permission.Id >= 300 && permission.Id <= 499)
+        //     .ToListAsync();
+        //
+        // persistedPermissions.Where(permission => !adminRole!.Permissions.Select(p => p.Id).Contains(permission.Id))
+        //     .ToList()
+        //     .ForEach(permission => adminRole!.Permissions.Add(permission));
+        // await _context.SaveChangesAsync();
+        //
+        // // Initialize admin
+        // if (!_context.Members.Any())
+        //     _context.Members.Add(new Member() { Name = "Mekkl", Roles = new List<Role>( new[] { adminRole! } )});
+        //
+        // await _context.SaveChangesAsync();
     }
 }

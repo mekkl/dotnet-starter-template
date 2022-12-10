@@ -1,4 +1,4 @@
-﻿using Domain.Auth;
+﻿using Domain.Model;
 using FluentAssertions;
 
 namespace Tests.Domain.Auth;

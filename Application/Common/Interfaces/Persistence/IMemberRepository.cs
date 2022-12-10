@@ -2,7 +2,7 @@
 
 namespace Application.Common.Interfaces.Persistence;
 
-public interface IUserRepository : IRepository<User>
+public interface IMemberRepository : IRepository<Member>
 {
     
 }

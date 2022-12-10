@@ -1,4 +1,4 @@
-﻿using Domain.Auth;
+﻿using Domain.Model;
 
 namespace Application.Common.Interfaces.Auth;
 

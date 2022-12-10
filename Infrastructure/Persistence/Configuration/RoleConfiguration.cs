@@ -1,4 +1,4 @@
-﻿using Domain.Auth;
+﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +8,11 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.ToTable("Roles");
+        builder.ToTable(nameof(Role));
         
         builder.HasKey(role => role.Id);
+        builder.Property(role => role.Id).ValueGeneratedNever();
+        
         builder.Property(role => role.Name);
 
         builder.HasMany(role => role.Permissions)
@@ -18,8 +20,6 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
             .UsingEntity<RolePermission>();
 
         builder.HasMany(role => role.Members)
-            .WithMany();
-
-        builder.HasData(Role.GetValues());
+            .WithMany(member => member.Roles);
     }
 }

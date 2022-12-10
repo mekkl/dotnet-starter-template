@@ -15,7 +15,9 @@ public class AppDbContext : DbContext
         _dbConnectionFactory = dbConnectionFactory;
     }
     
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Member> Members { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<Permission> Permissions { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -26,9 +28,9 @@ public class AppDbContext : DbContext
         });
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        base.OnModelCreating(builder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        base.OnModelCreating(modelBuilder);
     }
 }

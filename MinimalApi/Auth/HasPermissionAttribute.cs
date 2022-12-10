@@ -1,4 +1,4 @@
-﻿using Domain.Auth.Enums;
+﻿using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MinimalApi.Auth;
