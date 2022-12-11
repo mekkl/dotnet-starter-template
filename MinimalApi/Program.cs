@@ -1,14 +1,10 @@
 using Application;
-using Application.Admin.Queries;
-using Application.Auth.Commands;
-using Domain.Enums;
 using Infrastructure;
 using Infrastructure.Persistence;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Auth;
+using MinimalApi.Endpoints;
 using MinimalApi.Extensions;
 using MinimalApi.Health;
 using MinimalApi.HostedServices;
@@ -21,6 +17,8 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", true, true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
     .Build();
+
+builder.Services.AddEndpoints();
 
 builder.Services.AddSwagger();
 
@@ -80,33 +78,7 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/ping", () => "pong")
-    .WithName("Ping")
-    .WithDisplayName("Ping")
-    .WithSummary("Ping pong endpoint")
-    .WithDescription("Get a pong response from server")
-    .WithOpenApi();
+app.MapEndpoints();
 
-app.MapGet("/admin/servertime", (IMediator mediator) => mediator.Send(new GetServerTimeQuery()))
-    .WithName("Server Time")
-    .WithDisplayName("Server Time")
-    .WithSummary("Display server time")
-    .WithDescription("Get the current server time")
-    .WithOpenApi();
-
-app.MapGet("/auth/debug",  [Permission(Permission.ReadMember)] () => "OK")
-    .WithName("Auth Debug")
-    .WithDisplayName("Auth Debug")
-    .WithSummary("Auth Debug endpoint")
-    .WithDescription("Test auth related code")
-    .WithOpenApi();
-
-app.MapPost("/auth/login", (IMediator mediator, [FromBody] LoginCommand loginCommand) 
-        => mediator.Send(loginCommand))
-    .WithName("Login")
-    .WithDisplayName("Login")
-    .WithSummary("Login user")
-    .WithDescription("Authenticates and login the member")
-    .WithOpenApi();
 
 app.Run();
