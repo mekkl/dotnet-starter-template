@@ -270,7 +270,7 @@ Command for checking nuget version and upgrade
 dotnet outdated -u
 ```
 
-# Other Resources
+# Used Resources/Insirations
 
 ## Benchmark testing
 See: https://github.com/dotnet/BenchmarkDotNet
@@ -317,4 +317,7 @@ See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetc
 
 ## CodeQL
 - https://codeql.github.com/
+
+## Carter 
+- https://github.com/CarterCommunity/Carter/tree/77a93e45ee3a373079810be798c3c50d2248c7bb
 
