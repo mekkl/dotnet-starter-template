@@ -273,23 +273,21 @@ dotnet outdated -u
 # Backend Resources/Inspirations
 
 ## Benchmark testing
-See: https://github.com/dotnet/BenchmarkDotNet
+- https://github.com/dotnet/BenchmarkDotNet
 
 ## Load testing
-See: https://www.youtube.com/watch?v=r-Jte8Y8zag
+- https://www.youtube.com/watch?v=r-Jte8Y8zag
 
 ## Versioning
-See: https://medium.com/fiverr-engineering/major-minor-patch-a5298e2e1798
-
-## API Versioning
-See: https://www.youtube.com/watch?v=iVHtKG0eU_s
-See: https://dev.to/htissink/asp-net-core-api-path-versioning-197o
+- https://medium.com/fiverr-engineering/major-minor-patch-a5298e2e1798
+- https://www.youtube.com/watch?v=iVHtKG0eU_s
+- https://dev.to/htissink/asp-net-core-api-path-versioning-197o
 
 ## JSON Serialize
-See: https://github.com/neuecc/Utf8Json
+- https://github.com/neuecc/Utf8Json
 
 ## SignalR
-See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetcore-6.0
+- https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetcore-6.0
 
 ## Test resources
 - https://dejanstojanovic.net/aspnet/2020/may/setting-up-code-coverage-reports-in-azure-devops-pipeline/
@@ -318,8 +316,10 @@ See: https://docs.microsoft.com/en-us/aspnet/core/signalr/streaming?view=aspnetc
 ## CodeQL
 - https://codeql.github.com/
 
-## Carter 
+## Endpoints 
 - https://github.com/CarterCommunity/Carter/tree/77a93e45ee3a373079810be798c3c50d2248c7bb
+- https://github.com/yavorfingarov/Reprise
+- https://fast-endpoints.com/
 
 # Frontend Resources/Inspirations
 
