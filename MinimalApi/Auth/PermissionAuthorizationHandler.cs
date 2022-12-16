@@ -1,39 +1,28 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Application.Auth.Queries;
-using MediatR;
+﻿using Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MinimalApi.Auth;
 
+/// <summary>
+/// Be aware of JWT size when utilizing it for permission storage. Also, JWT lifetime can have the effect that a
+/// update of the user permissions not taking effect before the JWT is refreshed/revoked.
+/// </summary>
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
-    private readonly IServiceScopeFactory _scopeFactory;
-
-    public PermissionAuthorizationHandler(IServiceScopeFactory scopeFactory)
-    {
-        _scopeFactory = scopeFactory;
-    }
-
-    protected override async Task HandleRequirementAsync(
+    protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context, 
         PermissionRequirement requirement)
     {
-        var clientId = context.User.Claims
-            .FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
-
-        if (!Guid.TryParse(clientId, out var parsedMemberId))
-        {
-            return;
-        }
-
-        using var scope = _scopeFactory.CreateScope();
-
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        var permissions = await mediator.Send(new GetPermissionsQuery(parsedMemberId));
+        var permissions = context.User.Claims
+            .Where(claim => claim.Type == CustomClaims.Permissions)
+            .Select(claim => claim.Value)
+            .ToHashSet();
         
         if (permissions.Contains(requirement.Permission))
         {
             context.Succeed(requirement);
         }
+
+        return Task.CompletedTask;
     }
 }

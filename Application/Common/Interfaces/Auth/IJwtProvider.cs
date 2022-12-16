@@ -4,7 +4,7 @@ namespace Application.Common.Interfaces.Auth;
 
 public interface IJwtProvider
 {
-    string GenerateJwtToken(string clientId);
+    string GenerateJwtToken(Member member);
     RefreshToken GenerateRefreshToken(string clientId);
     string? ValidateJwtToken(string token);
 }
