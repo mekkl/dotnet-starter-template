@@ -8,6 +8,13 @@ namespace Tests.MinimalApi.Auth;
 
 public class PermissionAuthorizationHandlerTest
 {
+    private readonly PermissionAuthorizationHandler _sut;
+
+    public PermissionAuthorizationHandlerTest()
+    {
+        _sut = new PermissionAuthorizationHandler();
+    }
+    
     [Fact]
     public void Handle_WhenCalledWithPermission_ShouldSucceed()
     {
@@ -16,9 +23,8 @@ public class PermissionAuthorizationHandlerTest
         var requirement = new PermissionRequirement(readPermission);
 
         var handlerContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, null);
-
-        var sut = new PermissionAuthorizationHandler();
-        sut.HandleAsync(handlerContext);
+        
+        _sut.HandleAsync(handlerContext);
 
         handlerContext.HasSucceeded.Should().BeTrue();
     }
@@ -32,8 +38,7 @@ public class PermissionAuthorizationHandlerTest
 
         var handlerContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, null);
 
-        var sut = new PermissionAuthorizationHandler();
-        sut.HandleAsync(handlerContext);
+        _sut.HandleAsync(handlerContext);
 
         handlerContext.HasSucceeded.Should().BeFalse();
     }
@@ -47,8 +52,7 @@ public class PermissionAuthorizationHandlerTest
 
         var handlerContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, null);
 
-        var sut = new PermissionAuthorizationHandler();
-        sut.HandleAsync(handlerContext);
+        _sut.HandleAsync(handlerContext);
 
         handlerContext.HasSucceeded.Should().BeFalse();
     }
@@ -62,8 +66,7 @@ public class PermissionAuthorizationHandlerTest
 
         var handlerContext = new AuthorizationHandlerContext(new List<IAuthorizationRequirement> { requirement }, user, null);
 
-        var sut = new PermissionAuthorizationHandler();
-        sut.HandleAsync(handlerContext);
+        _sut.HandleAsync(handlerContext);
 
         handlerContext.HasSucceeded.Should().BeFalse();
     }
