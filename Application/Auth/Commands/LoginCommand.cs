@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Application.Common.Interfaces.Auth;
+using Domain.Model;
 using MediatR;
 using Shared.Attributes;
 
@@ -26,6 +27,6 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
 
     public Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(_jwtProvider.GenerateJwtToken("clientId"));
+        return Task.FromResult(_jwtProvider.GenerateJwtToken(new Member()));
     }
 }

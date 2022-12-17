@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Application.Common.Interfaces.Auth;
 using Application.Common.Options.Auth;
+using Domain.Constants;
 using Domain.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -22,12 +23,18 @@ public sealed class JwtProvider : IJwtProvider
         _jwtOptions = jwtOptions.Value;
     }
 
-    public string GenerateJwtToken(string clientId)
+    public string GenerateJwtToken(Member member)
     {
-        var claims = new Claim[]
+        var permissions = member.Roles.SelectMany(role => role.Permissions).ToHashSet();
+        
+        var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, clientId),
+            new(JwtRegisteredClaimNames.Sub, member.Id.ToString()),
         };
+        
+        claims.AddRange(permissions
+            .Select(permission => new Claim(CustomClaims.Permissions, permission.ToString()!)));
+
         var key = Encoding.UTF8.GetBytes(_jwtOptions.Secret);
         var signingCredentials =
             new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);

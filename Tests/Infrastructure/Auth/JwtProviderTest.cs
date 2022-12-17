@@ -1,4 +1,5 @@
 ﻿using Application.Common.Options.Auth;
+using Domain.Model;
 using FluentAssertions;
 using Infrastructure.Auth;
 using Microsoft.Extensions.Logging;
@@ -30,7 +31,7 @@ public class JwtProviderTest
     [Fact]
     public void GenerateJwtToken_GeneratesToken()
     {
-        var actual = _sut.GenerateJwtToken("clientId");
+        var actual = _sut.GenerateJwtToken(new Member());
 
         actual.Should().NotBeNull();
     }
@@ -54,9 +55,12 @@ public class JwtProviderTest
     [Fact]
     public void ValidateJwtToken_ShouldReturnClientId_WhenTokenValid()
     {
-        var clientId = Guid.NewGuid().ToString();
-        var token = _sut.GenerateJwtToken(clientId);
+        var member = new Member
+        {
+            Id = Guid.NewGuid(),
+        };
+        var token = _sut.GenerateJwtToken(member);
             
-        _sut.ValidateJwtToken(token).Should().Be(clientId);
+        _sut.ValidateJwtToken(token).Should().Be(member.Id.ToString());
     }
 }
