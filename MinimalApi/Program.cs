@@ -25,6 +25,8 @@ builder.Services.AddSwagger();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
 builder.Services.AddAppHealthChecks();
+builder.Services.AddHealthChecksUI()
+    .AddInMemoryStorage();
 
 builder.Services.AddCors();
 
@@ -72,6 +74,10 @@ app.UseSwaggerSetup();
 
 app.UsePerformanceMiddleware();
 app.UseHealthChecks();
+app.UseHealthChecksUI(options =>
+{
+    options.UIPath = "/health-ui";
+});
 app.UseHttpsRedirection();
 
 app.UseCors();
